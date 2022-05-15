@@ -6017,7 +6017,7 @@ const main = async () => {
 
     if (!deployment) core.error(`Unable to find deployment using sha: ${process.env.GITHUB_SHA}`);
 
-    while (deployment.readyState !== 'READY') {
+    while (deployment.state !== 'READY') {
       deployment = await fetch(
         `https://api.vercel.com/v13/deployments/${deployment.url}?teamId=${vercel_team_id}`,
         {
@@ -6027,6 +6027,9 @@ const main = async () => {
           },
         }
       ).then((res) => res.json());
+
+      console.log(deployment?.state, deployment?.url);
+
       await sleep(3000);
     }
 
