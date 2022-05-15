@@ -1,0 +1,20 @@
+name: 'Get Vercel preview url by commit SHA action'
+description: 'Get the preview url of a Vercel deployment by Github commit SHA'
+
+inputs:
+  vercel_team_id:
+    description: 'https://vercel.com/docs/rest-api#introduction/api-basics/authentication/accessing-resources-owned-by-a-team'
+    required: true
+  vercel_access_token:
+    description: 'https://vercel.com/docs/rest-api#introduction/api-basics/authentication/creating-an-access-token'
+    required: true
+  commit_sha:
+    description: '${{ GITHUB_SHA }}'
+    required: true
+
+#outputs:
+#  vercel_preview_url
+
+runs:
+  using: 'node'
+  main: 'index.js'
