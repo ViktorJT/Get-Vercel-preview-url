@@ -43,6 +43,8 @@ const main = async () => {
         }
       ).then((res) => res.json());
 
+      if (!deployment) core.error(`Unable to fetch deployment`);
+
       console.log(deployment?.state, deployment?.url);
 
       await sleep(3000);
