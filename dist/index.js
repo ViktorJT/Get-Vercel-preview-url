@@ -8871,9 +8871,6 @@ function sleep(ms) {
 }
 
 const main = async () => {
-  console.log(github.payload);
-  console.log(github.context);
-
   if (
     process.env.GITHUB_EVENT_NAME !== 'pull_request' &&
     process.env.GITHUB_EVENT_NAME !== 'push'
@@ -8903,7 +8900,7 @@ const main = async () => {
 
     let sha;
     if (process.env.GITHUB_EVENT_NAME === 'pull_request') {
-      sha = github.payload.merge_commit_sha;
+      sha = github.context.payload.merge_commit_sha;
     } else {
       sha = process.env.GITHUB_SHA;
     }
