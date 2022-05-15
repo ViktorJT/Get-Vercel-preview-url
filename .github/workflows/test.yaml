@@ -14,4 +14,4 @@ jobs:
         with:
           vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
           vercel_access_token: ${{ secrets.VERCEL_ACCESS_TOKEN }}
-          commit_sha: ${{ GITHUB_SHA }}
+          commit_sha: ${{ github.sha }}
