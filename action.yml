@@ -9,12 +9,12 @@ inputs:
     description: 'https://vercel.com/docs/rest-api#introduction/api-basics/authentication/creating-an-access-token'
     required: true
   commit_sha:
-    description: '${{ GITHUB_SHA }}'
+    description: '${{ github.sha }}'
     required: true
 
 #outputs:
 #  vercel_preview_url
 
 runs:
-  using: 'node'
+  using: 'node18'
   main: 'dist/index.js'
