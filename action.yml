@@ -1,4 +1,4 @@
-name: 'Get Vercel preview url by commit SHA action'
+name: 'Get Vercel preview url by commit SHA'
 description: 'Get the preview URL of a Vercel deployment by Github commit SHA'
 branding:
   icon: link
