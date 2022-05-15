@@ -6027,7 +6027,11 @@ const main = async () => {
 
     if (deployment.state === 'READY') core.setOutput('preview_url', deployment.url);
 
-    while (deployment.readyState !== 'READY') {
+    while (
+      deployment.readyState !== 'READY' ||
+      deployment.readyState !== 'ERROR' ||
+      deployment.readyState !== 'CANCELED'
+    ) {
       deployment = await fetch(
         `https://api.vercel.com/v13/deployments/${deployment.url}?teamId=${vercel_team_id}`,
         {
@@ -6042,6 +6046,10 @@ const main = async () => {
 
       await sleep(timeout);
     }
+
+    if (deployment.readyState === 'ERROR')
+      core.error(`An error occurred while getting preview url`);
+    if (deployment.readyState === 'CANCELED') core.error(`Deployment was canceled`);
 
     core.setOutput('preview_url', deployment.url);
   } catch (error) {
