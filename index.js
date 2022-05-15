@@ -6,8 +6,6 @@ const fetch = require('node-fetch');
 
 const main = async () => {
   try {
-    console.log('DOES THIS INCLUDE THE GITHUB_SHA?', process.env.GITHUB_SHA);
-
     const vercel_team_id = core.getInput('vercel_team_id', {required: true});
     const vercel_access_token = core.getInput('vercel_access_token', {required: true});
 
@@ -34,5 +32,4 @@ const main = async () => {
   }
 };
 
-// Call the main function to run the action
 main();
