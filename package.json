@@ -1,7 +1,7 @@
 {
-  "name": "Get Vercel Preview Url by Commit SHA",
+  "name": "Get Vercel Preview Url",
   "version": "0.0.1",
-  "description": "Github Action used to get the preview url of a vercel deployment by commit SHA",
+  "description": "Github Action used to get the preview url of a vercel deployment",
   "main": "index.js",
   "scripts": {
     "build": "ncc build index.js -o dist",

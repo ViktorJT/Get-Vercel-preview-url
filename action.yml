@@ -1,5 +1,5 @@
-name: 'Get Vercel preview url by commit SHA'
-description: 'Get the preview URL of a Vercel deployment by Github commit SHA'
+name: 'Get Vercel Preview URL'
+description: 'Get the preview URL of a Vercel deployment'
 branding:
   icon: link
   color: gray-dark
@@ -14,7 +14,7 @@ inputs:
 
 outputs:
   preview_url:
-    description: 'deployment preview URL'
+    description: 'Vercel deployment preview URL'
 
 runs:
   using: 'node16'
