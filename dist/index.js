@@ -6009,11 +6009,12 @@ const main = async () => {
 
     const {deployments} = response.json();
 
-    const deployment = deployments.find(
-      (deployment) => deployment.meta.githubCommitSha === process.env.GITHUB_SHA
-    );
+    console.log(deployments);
+    // const deployment = deployments.find(
+    //   (deployment) => deployment.meta.githubCommitSha === process.env.GITHUB_SHA
+    // );
 
-    console.log(deployment);
+    // console.log(deployment);
   } catch (error) {
     core.setFailed(error.message);
   }
