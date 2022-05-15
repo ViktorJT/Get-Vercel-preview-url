@@ -19,7 +19,7 @@ const main = async () => {
       },
     });
 
-    console.log(response.json());
+    console.log(await response.json());
   } catch (error) {
     core.setFailed(error.message);
   }
