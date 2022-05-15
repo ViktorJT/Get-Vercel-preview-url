@@ -8874,7 +8874,7 @@ function sleep(ms) {
 }
 
 const main = async () => {
-  console.log(github);
+  console.log(github.payload);
   console.log(github.context);
 
   if (
