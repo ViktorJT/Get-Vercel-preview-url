@@ -16,7 +16,6 @@ const main = async () => {
     });
 
     console.log(response.json());
-    
   } catch (error) {
     core.setFailed(error.message);
   }
