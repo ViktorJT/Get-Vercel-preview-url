@@ -11,8 +11,6 @@ function sleep(ms) {
 }
 
 const main = async () => {
-  console.log(github.context.payload.pull_request._links);
-
   const commit = github.context;
 
   if (commit.eventName !== 'pull_request' && commit.eventName !== 'push') {
@@ -22,6 +20,7 @@ const main = async () => {
   try {
     const vercel_team_id = core.getInput('vercel_team_id', {required: true});
     const vercel_access_token = core.getInput('vercel_access_token', {required: true});
+    const gh_token = core.getInput('gh_token', {required: true});
     const timeout = core.getInput('timeout');
     const limit = core.getInput('limit');
 
@@ -41,7 +40,17 @@ const main = async () => {
 
     let sha;
     if (commit.eventName === 'pull_request') {
-      sha = commit.payload.pull_request.merge_commit_sha;
+      const octokit = github.getOctokit(gh_token);
+
+      const prNumber = commit.payload.pull_request.number;
+
+      const currentPR = await octokit.rest.pulls.get({
+        owner: commit.repo.owner,
+        repo: commit.repo.repo,
+        pull_number: prNumber,
+      });
+
+      sha = currentPR.data.head.sha;
     } else {
       sha = commit.sha;
     }
