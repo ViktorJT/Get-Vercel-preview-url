@@ -1,3 +1,5 @@
+// TODO Clean up repository secrets
+
 const core = require('@actions/core');
 const fetch = require('node-fetch');
 const github = require('@actions/github');
@@ -9,6 +11,8 @@ function sleep(ms) {
 }
 
 const main = async () => {
+  console.log(github.context);
+
   if (
     process.env.GITHUB_EVENT_NAME !== 'pull_request' &&
     process.env.GITHUB_EVENT_NAME !== 'push'
