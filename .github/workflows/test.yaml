@@ -1,8 +1,6 @@
 name: Integration test
 
-on:
-  pull_request:
-    types: [opened, reopened, synchronize]
+on: [push, pull_request]
 
 jobs:
   annotate-pr:
@@ -14,4 +12,3 @@ jobs:
         with:
           vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
           vercel_access_token: ${{ secrets.VERCEL_ACCESS_TOKEN }}
-          commit_sha: ${{ github.sha }}

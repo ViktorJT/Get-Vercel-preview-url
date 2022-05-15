@@ -20,6 +20,7 @@
   "homepage": "https://github.com/ViktorJT/Get-Vercel-preview-url-by-commit-SHA-action#readme",
   "dependencies": {
     "@actions/core": "^1.8.2",
-    "@vercel/ncc": "^0.33.4"
+    "@vercel/ncc": "^0.33.4",
+    "node-fetch": "^2.6.7"
   }
 }
