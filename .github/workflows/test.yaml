@@ -1,0 +1,17 @@
+name: Integration test
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  annotate-pr:
+    runs-on: ubuntu-latest
+    name: Testing action
+    steps:
+      - name: Test vercel get preview url by commit sha
+        uses: ViktorJT/Get-Vercel-preview-url-by-commit-SHA-action@main
+        with:
+          vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
+          vercel_access_token: ${{ secrets.VERCEL_ACCESS_TOKEN }}
+          commit_sha: ${{ GITHUB_SHA }}
