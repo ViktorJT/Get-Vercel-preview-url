@@ -42,6 +42,9 @@ const main = async () => {
           },
         }
       ).then((res) => res.json());
+
+      console.log(deployment.readyState, deployment.url);
+
       await sleep(3000);
     }
 
