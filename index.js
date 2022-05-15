@@ -1,13 +1,12 @@
 const core = require('@actions/core');
+const fetch = require('node-fetch');
 
 const main = async () => {
   try {
-    // IF THIS CAN RETURN THE COMMIT SHA FROM GH- REMOVE NEED TO PASS IT TO FUNCTION!!
-    console.log('DOES THIS INCLUDE THE GITHUB_SHA?', process.env);
+    console.log('DOES THIS INCLUDE THE GITHUB_SHA?', process.env.GITHUB_SHA);
 
     const vercel_team_id = core.getInput('vercel_team_id', {required: true});
     const vercel_access_token = core.getInput('vercel_access_token', {required: true});
-    const commit_sha = core.getInput('commit_sha', {required: true});
 
     // DEBUGGING!
     console.log({vercel_access_token, vercel_team_id});
