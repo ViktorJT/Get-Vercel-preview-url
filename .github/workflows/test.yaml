@@ -1,8 +1,6 @@
 name: Integration test
 
-on:
-  pull_request:
-    types: [opened, reopened, synchronize]
+on: [push, pull_request]
 
 jobs:
   annotate-pr:
