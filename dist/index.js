@@ -5985,9 +5985,16 @@ var __webpack_exports__ = {};
 (() => {
 // TODO Make 'limit' into an input? controlling how many deployments should be fetched from the vercel api
 // https://vercel.com/docs/rest-api#introduction/api-basics/pagination
+// TODO Add input control for sleep function
 
 const core = __nccwpck_require__(186);
 const fetch = __nccwpck_require__(467);
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 
 const main = async () => {
   try {
@@ -6008,8 +6015,20 @@ const main = async () => {
       (deployment) => deployment.meta.githubCommitSha === process.env.GITHUB_SHA
     );
 
-    if (!deployment)
-      core.error(`Unable to find deployment with github.sha: ${process.env.GITHUB_SHA}`);
+    if (!deployment) core.error(`Unable to find deployment using sha: ${process.env.GITHUB_SHA}`);
+
+    while (deployment.readyState !== 'READY') {
+      deployment = await fetch(
+        `https://api.vercel.com/v13/deployments/${deployment.url}?teamId=${vercel_team_id}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${vercel_access_token}`,
+          },
+        }
+      ).then((res) => res.json());
+      await sleep(3000);
+    }
 
     core.setOutput('preview_url', deployment.url);
   } catch (error) {
