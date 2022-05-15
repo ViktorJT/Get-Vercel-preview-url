@@ -6001,7 +6001,7 @@ const main = async () => {
     process.env.GITHUB_EVENT_NAME !== 'pull_request' ||
     process.env.GITHUB_EVENT_NAME !== 'push'
   ) {
-    core.error(`This action needs to be run on pull requests and/or push`);
+    core.setFailed(`This action needs to be run on pull requests and/or push`);
   }
 
   try {
@@ -6042,14 +6042,12 @@ const main = async () => {
         }
       ).then((res) => res.json());
 
-      if (!deployment) core.error(`Unable to fetch deployment`);
-
       await sleep(timeout);
     }
 
     if (deployment.readyState === 'ERROR')
-      core.error(`An error occurred while getting preview url`);
-    if (deployment.readyState === 'CANCELED') core.error(`Deployment was canceled`);
+      core.setFailed(`An error occurred while getting preview url`);
+    if (deployment.readyState === 'CANCELED') core.setFailed(`Deployment was canceled`);
 
     core.setOutput('preview_url', deployment.url);
   } catch (error) {
