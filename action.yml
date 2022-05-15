@@ -17,4 +17,4 @@ inputs:
 
 runs:
   using: 'node'
-  main: 'index.js'
+  main: 'dist/index.js'

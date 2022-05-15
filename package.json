@@ -4,6 +4,7 @@
   "description": "Github Action used to get the preview url of a vercel deployment by commit SHA",
   "main": "index.js",
   "scripts": {
+    "build": "ncc build index.js -o dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/ViktorJT/Get-Vercel-preview-url-by-commit-SHA-action#readme",
   "dependencies": {
-    "@actions/core": "^1.8.2"
+    "@actions/core": "^1.8.2",
+    "@vercel/ncc": "^0.33.4"
   }
 }
