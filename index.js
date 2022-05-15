@@ -14,7 +14,7 @@ const main = async () => {
   console.log(process.env.GITHUB_EVENT_NAME);
 
   if (
-    process.env.GITHUB_EVENT_NAME !== 'pull_request' ||
+    process.env.GITHUB_EVENT_NAME !== 'pull_request' &&
     process.env.GITHUB_EVENT_NAME !== 'push'
   ) {
     core.setFailed(`This action needs to be run on pull requests and/or push`);
