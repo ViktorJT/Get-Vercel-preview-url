@@ -6000,14 +6000,15 @@ const main = async () => {
     console.log({vercel_access_token, vercel_team_id});
     // DEBUGGING!
 
-    const response = await fetch(`https://api.vercel.com/v6/deployments?teamId=${vercel_team_id}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${vercel_access_token}`,
-      },
-    });
-
-    const {deployments} = response.json();
+    const {deployments} = await fetch(
+      `https://api.vercel.com/v6/deployments?teamId=${vercel_team_id}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${vercel_access_token}`,
+        },
+      }
+    ).then((res) => res.json());
 
     console.log(deployments);
     // const deployment = deployments.find(
