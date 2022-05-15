@@ -1,5 +1,7 @@
 name: 'Get Vercel preview url by commit SHA action'
 description: 'Get the preview URL of a Vercel deployment by Github commit SHA'
+icon: link
+color: gray-dark
 
 inputs:
   vercel_team_id:
