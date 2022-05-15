@@ -1,6 +1,6 @@
 {
   "name": "Get Vercel Preview Url by Commit SHA",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Github Action used to get the preview url of a vercel deployment by commit SHA",
   "main": "index.js",
   "scripts": {
