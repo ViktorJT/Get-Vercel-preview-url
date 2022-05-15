@@ -1,3 +1,6 @@
+// TODO Make 'limit' into an input? controlling how many deployments should be fetched from the vercel api
+// https://vercel.com/docs/rest-api#introduction/api-basics/pagination
+
 const core = require('@actions/core');
 const fetch = require('node-fetch');
 
@@ -19,7 +22,13 @@ const main = async () => {
       },
     });
 
-    console.log(await response.json());
+    const {deployments} = response.json();
+
+    const deployment = deployments.find(
+      (deployment) => deployment.meta.githubCommitSha === process.env.GITHUB_SHA
+    );
+
+    console.log(deployment);
   } catch (error) {
     core.setFailed(error.message);
   }

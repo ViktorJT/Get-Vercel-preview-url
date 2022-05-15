@@ -5983,6 +5983,9 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
+// TODO Make 'limit' into an input? controlling how many deployments should be fetched from the vercel api
+// https://vercel.com/docs/rest-api#introduction/api-basics/pagination
+
 const core = __nccwpck_require__(186);
 const fetch = __nccwpck_require__(467);
 
@@ -6004,7 +6007,13 @@ const main = async () => {
       },
     });
 
-    console.log(await response.json());
+    const {deployments} = response.json();
+
+    const deployment = deployments.find(
+      (deployment) => deployment.meta.githubCommitSha === process.env.GITHUB_SHA
+    );
+
+    console.log(deployment);
   } catch (error) {
     core.setFailed(error.message);
   }
