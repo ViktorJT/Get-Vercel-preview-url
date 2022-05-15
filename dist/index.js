@@ -5996,10 +5996,6 @@ const main = async () => {
     const vercel_team_id = core.getInput('vercel_team_id', {required: true});
     const vercel_access_token = core.getInput('vercel_access_token', {required: true});
 
-    // DEBUGGING!
-    console.log({vercel_access_token, vercel_team_id});
-    // DEBUGGING!
-
     const {deployments} = await fetch(
       `https://api.vercel.com/v6/deployments?teamId=${vercel_team_id}`,
       {
@@ -6010,12 +6006,14 @@ const main = async () => {
       }
     ).then((res) => res.json());
 
-    // console.log(deployments);
+    console.log(deployments);
+
     const deployment = deployments.find((deployment) => {
-      console.log(deployment.meta);
+      return deployment.meta.githubCommitSha === process.env.GITHUB_SHA;
     });
 
-    console.log(deployment);
+    if (!deployment)
+      core.error(`Unable to find deployment with github.sha: ${process.env.GITHUB_SHA}`);
   } catch (error) {
     core.setFailed(error.message);
   }
