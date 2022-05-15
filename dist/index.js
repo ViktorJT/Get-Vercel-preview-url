@@ -5996,7 +5996,8 @@ function sleep(ms) {
 }
 
 const main = async () => {
-  console.log(process.env.GITHUB_EVENT_NAME);
+  console.log(github);
+  console.log(github.context);
 
   if (
     process.env.GITHUB_EVENT_NAME !== 'pull_request' &&
@@ -6023,13 +6024,18 @@ const main = async () => {
       }
     ).then((res) => res.json());
 
-    if (!deployments) core.setFailed('Unable to retrieve deployments');
+    if (!deployments) core.setFailed('Unable to fetch Vercel deployments');
 
-    let deployment = deployments.find(
-      (deployment) => deployment.meta.githubCommitSha === process.env.GITHUB_SHA
-    );
+    let sha;
 
-    if (!deployment) core.error(`Unable to find deployment using sha: ${process.env.GITHUB_SHA}`);
+    if (process.env.GITHUB_EVENT_NAME === 'pull_request') {
+    } else {
+      sha = process.env.GITHUB_SHA;
+    }
+
+    let deployment = deployments.find((deployment) => deployment.meta.githubCommitSha === sha);
+
+    if (!deployment) core.error(`Unable to find deployment with sha: ${process.env.GITHUB_SHA}`);
 
     if (deployment.state === 'READY') core.setOutput('preview_url', deployment.url);
 
