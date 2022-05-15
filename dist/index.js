@@ -6006,14 +6006,14 @@ const main = async () => {
       }
     ).then((res) => res.json());
 
-    console.log(deployments);
-
-    const deployment = deployments.find((deployment) => {
-      return deployment.meta.githubCommitSha === process.env.GITHUB_SHA;
-    });
+    const deployment = deployments.find(
+      (deployment) => deployment.meta.githubCommitSha === process.env.GITHUB_SHA
+    );
 
     if (!deployment)
       core.error(`Unable to find deployment with github.sha: ${process.env.GITHUB_SHA}`);
+
+    core.setOutput('preview_url', deployment.url);
   } catch (error) {
     core.setFailed(error.message);
   }

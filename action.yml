@@ -9,8 +9,9 @@ inputs:
     description: 'https://vercel.com/docs/rest-api#introduction/api-basics/authentication/creating-an-access-token'
     required: true
 
-#outputs:
-#  vercel_preview_url
+outputs:
+  preview_url:
+    description: 'deployment preview URL'
 
 runs:
   using: 'node16'
