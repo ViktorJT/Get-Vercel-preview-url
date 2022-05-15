@@ -12,9 +12,17 @@ function sleep(ms) {
 }
 
 const main = async () => {
+  if (
+    process.env.GITHUB_EVENT_NAME !== 'pull_request' ||
+    process.env.GITHUB_EVENT_NAME !== 'push'
+  ) {
+    core.error(`This action needs to be run on pull requests and/or push`);
+  }
+
   try {
     const vercel_team_id = core.getInput('vercel_team_id', {required: true});
     const vercel_access_token = core.getInput('vercel_access_token', {required: true});
+    const timeout = core.getInput('timeout');
 
     const {deployments} = await fetch(
       `https://api.vercel.com/v6/deployments?teamId=${vercel_team_id}`,
@@ -47,9 +55,7 @@ const main = async () => {
 
       if (!deployment) core.error(`Unable to fetch deployment`);
 
-      console.log(deployment.readyState, deployment.url);
-
-      await sleep(3000);
+      await sleep(timeout);
     }
 
     core.setOutput('preview_url', deployment.url);
