@@ -6014,7 +6014,7 @@ const main = async () => {
     if (limit > 100) core.setFailed('Maximum pagination limit is 100');
 
     const {deployments} = await fetch(
-      `https://api.vercel.com/v6/deployments?teamId=${vercel_team_id}?limit=${limit}`,
+      `https://api.vercel.com/v6/deployments?teamId=${vercel_team_id}&limit=${limit}`,
       {
         method: 'GET',
         headers: {
@@ -6022,6 +6022,8 @@ const main = async () => {
         },
       }
     ).then((res) => res.json());
+
+    if (!deployments) core.setFailed('Unable to retrieve deployments');
 
     let deployment = deployments.find(
       (deployment) => deployment.meta.githubCommitSha === process.env.GITHUB_SHA
