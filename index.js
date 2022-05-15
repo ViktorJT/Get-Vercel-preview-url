@@ -26,7 +26,7 @@ const main = async () => {
       }
     ).then((res) => res.json());
 
-    const deployment = deployments.find(
+    let deployment = deployments.find(
       (deployment) => deployment.meta.githubCommitSha === process.env.GITHUB_SHA
     );
 
