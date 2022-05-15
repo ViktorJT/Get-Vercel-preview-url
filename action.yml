@@ -14,6 +14,9 @@ inputs:
   timeout:
     description: 'Time spent waiting between requests to the Vercel Api'
     default: 3000
+  limit:
+    description: 'The pagination limit of the initial vercel api request'
+    default: 20
 
 outputs:
   preview_url:

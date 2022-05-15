@@ -1,6 +1,5 @@
 // TODO Make 'limit' into an input? controlling how many deployments should be fetched from the vercel api
 // https://vercel.com/docs/rest-api#introduction/api-basics/pagination
-// TODO Add input control for sleep function
 
 const core = require('@actions/core');
 const fetch = require('node-fetch');
@@ -23,9 +22,12 @@ const main = async () => {
     const vercel_team_id = core.getInput('vercel_team_id', {required: true});
     const vercel_access_token = core.getInput('vercel_access_token', {required: true});
     const timeout = core.getInput('timeout');
+    const limit = core.getInput('limit');
+
+    if (limit > 100) core.setFailed('Maximum pagination limit is 100');
 
     const {deployments} = await fetch(
-      `https://api.vercel.com/v6/deployments?teamId=${vercel_team_id}`,
+      `https://api.vercel.com/v6/deployments?teamId=${vercel_team_id}?limit=${limit}`,
       {
         method: 'GET',
         headers: {
@@ -42,11 +44,7 @@ const main = async () => {
 
     if (deployment.state === 'READY') core.setOutput('preview_url', deployment.url);
 
-    while (
-      deployment.readyState !== 'READY' ||
-      deployment.readyState !== 'ERROR' ||
-      deployment.readyState !== 'CANCELED'
-    ) {
+    while (deployment.readyState !== 'READY') {
       deployment = await fetch(
         `https://api.vercel.com/v13/deployments/${deployment.url}?teamId=${vercel_team_id}`,
         {
@@ -57,12 +55,12 @@ const main = async () => {
         }
       ).then((res) => res.json());
 
+      if (deployment.readyState === 'ERROR')
+        core.setFailed(`An error occurred while getting preview url`);
+      if (deployment.readyState === 'CANCELED') core.setFailed(`Deployment was canceled`);
+
       await sleep(timeout);
     }
-
-    if (deployment.readyState === 'ERROR')
-      core.setFailed(`An error occurred while getting preview url`);
-    if (deployment.readyState === 'CANCELED') core.setFailed(`Deployment was canceled`);
 
     core.setOutput('preview_url', deployment.url);
   } catch (error) {
