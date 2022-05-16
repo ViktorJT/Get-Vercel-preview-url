@@ -55,7 +55,7 @@ jobs:
     steps:
       - name: Get Vercel Preview URL
         id: vercel-deployment
-        uses: ViktorJT/Get-Vercel-preview-url@1.0.0
+        uses: ViktorJT/Get-Vercel-preview-url@1.1.0
         with:
           vercel_access_token: ${{ secrets.VERCEL_ACCESS_TOKEN }}
           vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
