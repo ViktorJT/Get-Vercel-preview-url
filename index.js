@@ -40,9 +40,15 @@ const main = async () => {
 
     const octokit = github.getOctokit(gh_token);
 
-    console.log(octokit);
-
     const prNumber = commit.payload.pull_request.number;
+
+    const test = await octokit.rest.pulls.listFiles({
+      owner: commit.repo.owner,
+      repo: commit.repo.repo,
+      pull_number: prNumber,
+    });
+
+    console.log('HEREEE \n', test);
 
     const currentPR = await octokit.rest.pulls.get({
       owner: commit.repo.owner,
