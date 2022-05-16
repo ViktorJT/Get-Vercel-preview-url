@@ -1,6 +1,6 @@
 {
   "name": "get-vercel-preview-url",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Github Action used to get the preview url of a vercel deployment",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ViktorJT/Get-Vercel-preview-url-by-commit-SHA-action.git"
+    "url": "git+https://github.com/ViktorJT/Get-Vercel-preview-url.git"
   },
   "keywords": [
     "action",
@@ -19,9 +19,9 @@
   "author": "Viktor Jensen-Torp",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ViktorJT/Get-Vercel-preview-url-by-commit-SHA-action/issues"
+    "url": "https://github.com/ViktorJT/Get-Vercel-preview-url/issues"
   },
-  "homepage": "https://github.com/ViktorJT/Get-Vercel-preview-url-by-commit-SHA-action#readme",
+  "homepage": "https://github.com/ViktorJT/Get-Vercel-preview-url#readme",
   "dependencies": {
     "@actions/core": "^1.8.2",
     "@actions/github": "^5.0.3",
