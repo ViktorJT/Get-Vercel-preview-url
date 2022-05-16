@@ -41,12 +41,15 @@ const main = async () => {
     let sha;
     if (commit.eventName === 'pull_request') {
       const octokit = github.getOctokit(gh_token);
+
       const prNumber = commit.payload.pull_request.number;
+
       const currentPR = await octokit.rest.pulls.get({
         owner: commit.repo.owner,
         repo: commit.repo.repo,
         pull_number: prNumber,
       });
+
       sha = currentPR.data.head.sha;
     } else {
       sha = commit.sha;

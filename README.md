@@ -41,23 +41,26 @@ the `preview url` is accessed using the workflow stepId, like so:
 
 ### Example
 
-This is an example using this action together with [Lighthouse Check Action](https://github.com/foo-software/lighthouse-check-action) to run analytics on web vitals whenever a push or pull request triggers a Vercel deployment:
+This is an example using this action together with [Lighthouse Check Action](https://github.com/foo-software/lighthouse-check-action) to run analytics on web vitals whenever a pull request triggers a Vercel deployment, and upload a full report as an artifact to the workflow:
 
 ```yml
 name: Performance Audit
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   audit:
-    name: Lighthouse Audit
+    name: Performance Audit
     runs-on: ubuntu-latest
     steps:
+      - name: Create report directory
+        run: mkdir -p ${{ github.workspace }}/tmp/artifacts
+
       - name: Get Vercel Preview URL
         id: vercel-deployment
-        uses: ViktorJT/Get-Vercel-preview-url@1.2.2
+        uses: ViktorJT/Get-Vercel-preview-url@main
         with:
-          vercel_access_token: ${{ secrets.VERCEL_ACCESS_TOKEN }}
+          vercel_access_token: ${{ secrets.VERCEL_TOKEN }}
           vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
           gh_token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -66,5 +69,12 @@ jobs:
         with:
           device: 'all'
           gitHubAccessToken: ${{ secrets.GITHUB_TOKEN }}
-          urls: 'https://${{ steps.vercel-deployment.outputs.preview_url }}'
+          outputDirectory: ${{ github.workspace }}/tmp/artifacts
+          urls: '${{ steps.vercel-deployment.outputs.preview_url }}'
+
+      - name: Upload reports
+        uses: actions/upload-artifact@master
+        with:
+          name: Lighthouse reports
+          path: ${{ github.workspace }}/tmp/artifacts
 ```
