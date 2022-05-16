@@ -22,6 +22,7 @@ const main = async () => {
     const timeout = core.getInput('timeout');
     const limit = core.getInput('limit');
     const prefix_path = core.getInput('prefix_path');
+    const prefix_url = core.getInput('prefix_url');
 
     if (limit > 100) core.setFailed('Maximum pagination limit is 100');
 
@@ -81,14 +82,22 @@ const main = async () => {
     if (prefix_path) {
       if (typeof prefix_path !== 'string') core.setFailed('Invalid prefix');
 
-      let prefix = prefix_path.trim();
-      if (!prefix.startsWith('/')) {
-        prefix = ['/', ...prefix].join('');
+      let pathPrefix = prefix_path.trim();
+      if (!pathPrefix.startsWith('/')) {
+        pathPrefix = ['/', ...pathPrefix].join('');
       }
-      if (!prefix.endsWith('/')) {
-        prefix = [...prefix, '/'].join('');
+      if (!pathPrefix.endsWith('/')) {
+        pathPrefix = [...pathPrefix, '/'].join('');
       }
-      deployment.url = `${deployment.url}${prefix}`;
+      deployment.url = `${deployment.url}${pathPrefix}`;
+    }
+
+    if (prefix_url) {
+      if (typeof prefix_url !== 'string') core.setFailed('Invalid prefix');
+
+      let urlPrefix = prefix_url.trim();
+
+      deployment.url = `${urlPrefix}${deployment.url}`;
     }
 
     core.setOutput('preview_url', deployment.url);
