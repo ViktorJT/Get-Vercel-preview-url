@@ -11,10 +11,6 @@ function sleep(ms) {
 const main = async () => {
   const commit = github.context;
 
-  if (commit.eventName !== 'pull_request') {
-    core.setFailed(`This action needs to be run on pull requests`);
-  }
-
   try {
     const vercel_team_id = core.getInput('vercel_team_id', {required: true});
     const vercel_access_token = core.getInput('vercel_access_token', {required: true});
@@ -41,14 +37,6 @@ const main = async () => {
     const octokit = github.getOctokit(gh_token);
 
     const prNumber = commit.payload.pull_request.number;
-
-    const test = await octokit.rest.pulls.listFiles({
-      owner: commit.repo.owner,
-      repo: commit.repo.repo,
-      pull_number: prNumber,
-    });
-
-    console.log('HEREEE \n', test);
 
     const currentPR = await octokit.rest.pulls.get({
       owner: commit.repo.owner,
