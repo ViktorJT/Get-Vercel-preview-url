@@ -1,6 +1,6 @@
 ## `Get Vercel Preview Url`
 
-> Github Action used to get the `preview url` of a vercel deployment for your continuous integration pipeline, supports both `pull_request` and `push` workflow triggers.
+> Github Action used to get the `preview url` of a vercel deployment for your continuous integration pipeline. Supports the `pull_request` workflow trigger.
 
 ### Basic usage
 
