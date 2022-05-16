@@ -8914,9 +8914,7 @@ const main = async () => {
       sha = commit.sha;
     }
 
-    let deployment = deployments.find(
-      (deployment) => deployment.meta.githubCommitSha === currentPR.data.head.sha
-    );
+    let deployment = deployments.find((deployment) => deployment.meta.githubCommitSha === sha);
 
     if (!deployment) core.error(`Unable to find deployment with sha: ${sha}`);
 
