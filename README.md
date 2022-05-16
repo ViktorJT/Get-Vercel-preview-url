@@ -46,7 +46,7 @@ This is an example using this action together with [Lighthouse Check Action](htt
 ```yml
 name: Performance Audit
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   audit:
