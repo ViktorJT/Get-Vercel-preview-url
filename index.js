@@ -11,6 +11,10 @@ function sleep(ms) {
 const main = async () => {
   const commit = github.context;
 
+  if (commit.eventName !== 'pull_request' && commit.eventName !== 'push') {
+    core.setFailed(`This action needs to be run on pull requests and/or push`);
+  }
+
   try {
     const vercel_team_id = core.getInput('vercel_team_id', {required: true});
     const vercel_access_token = core.getInput('vercel_access_token', {required: true});
@@ -34,15 +38,19 @@ const main = async () => {
 
     if (!deployments) core.setFailed('Unable to fetch Vercel deployments');
 
-    const octokit = github.getOctokit(gh_token);
-
-    const prNumber = commit.payload.pull_request.number;
-
-    const currentPR = await octokit.rest.pulls.get({
-      owner: commit.repo.owner,
-      repo: commit.repo.repo,
-      pull_number: prNumber,
-    });
+    let sha;
+    if (commit.eventName === 'pull_request') {
+      const octokit = github.getOctokit(gh_token);
+      const prNumber = commit.payload.pull_request.number;
+      const currentPR = await octokit.rest.pulls.get({
+        owner: commit.repo.owner,
+        repo: commit.repo.repo,
+        pull_number: prNumber,
+      });
+      sha = currentPR.data.head.sha;
+    } else {
+      sha = commit.sha;
+    }
 
     let deployment = deployments.find(
       (deployment) => deployment.meta.githubCommitSha === currentPR.data.head.sha

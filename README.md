@@ -1,6 +1,6 @@
 ## `Get Vercel Preview Url`
 
-> Github Action used to get the `preview url` of a vercel deployment for your continuous integration pipeline. Supports the `pull_request` workflow trigger.
+> Github Action used to get the `preview url` of a vercel deployment for your continuous integration pipeline. Supports the `pull_request` and `push` workflow triggers.
 
 ### Basic usage
 
@@ -9,7 +9,7 @@ Inside your `.github/workflows/{your-workflow}.yml` file:
 ```yml
 - name: Get Vercel Preview URL
   id: get-vercel-preview-url
-  uses: ViktorJT/Get-vercel-preview-url@1.1.0
+  uses: ViktorJT/Get-vercel-preview-url@1.2.0
   with:
     vercel_access_token: ${{ secrets.VERCEL_ACCESS_TOKEN }}
     vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
@@ -46,7 +46,7 @@ This is an example using this action together with [Lighthouse Check Action](htt
 ```yml
 name: Performance Audit
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   audit:
@@ -55,7 +55,7 @@ jobs:
     steps:
       - name: Get Vercel Preview URL
         id: vercel-deployment
-        uses: ViktorJT/Get-Vercel-preview-url@1.1.0
+        uses: ViktorJT/Get-Vercel-preview-url@1.2.0
         with:
           vercel_access_token: ${{ secrets.VERCEL_ACCESS_TOKEN }}
           vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
