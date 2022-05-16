@@ -21,6 +21,7 @@ const main = async () => {
     const gh_token = core.getInput('gh_token', {required: true});
     const timeout = core.getInput('timeout');
     const limit = core.getInput('limit');
+    const prefix_path = core.getInput('prefix_path');
 
     if (limit > 100) core.setFailed('Maximum pagination limit is 100');
 
@@ -75,6 +76,19 @@ const main = async () => {
       if (deployment.readyState === 'CANCELED') core.setFailed(`Deployment was canceled`);
 
       await sleep(timeout);
+    }
+
+    if (prefix_path) {
+      if (typeof prefix_path !== 'string') core.setFailed('Invalid prefix');
+
+      let prefix = prefix_path.trim();
+      if (!prefix.startsWith('/')) {
+        prefix = ['/', ...prefix].join('');
+      }
+      if (!prefix.endsWith('/')) {
+        prefix = [...prefix, '/'].join('');
+      }
+      deployment.url = `${deployment.url}${prefix}`;
     }
 
     core.setOutput('preview_url', deployment.url);

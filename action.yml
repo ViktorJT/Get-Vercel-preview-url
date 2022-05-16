@@ -5,15 +5,20 @@ branding:
   color: gray-dark
 
 inputs:
-  vercel_team_id:
-    description: 'https://vercel.com/docs/rest-api#introduction/api-basics/authentication/accessing-resources-owned-by-a-team'
-    required: true
   vercel_access_token:
     description: 'https://vercel.com/docs/rest-api#introduction/api-basics/authentication/creating-an-access-token'
+    required: true
+  vercel_team_id:
+    description: 'https://vercel.com/docs/rest-api#introduction/api-basics/authentication/accessing-resources-owned-by-a-team'
     required: true
   gh_token:
     description: 'https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret'
     required: true
+  prefix_url:
+    description: 'Pass a string to prefix the url'
+    default: 'https://'
+  prefix_path:
+    description: 'Pass a string to prefix the url path'
   timeout:
     description: 'Time spent waiting between requests to the Vercel Api'
     default: 3000
