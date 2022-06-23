@@ -11,6 +11,9 @@ inputs:
   vercel_team_id:
     description: 'https://vercel.com/docs/rest-api#introduction/api-basics/authentication/accessing-resources-owned-by-a-team'
     required: true
+  vercel_project_id:
+    description: 'Get your Project ID from project settings in Vercel management console'
+    required: true
   gh_token:
     description: 'https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret'
     required: true
